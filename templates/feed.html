@@ -1,3 +1,18 @@
 <ion-view title="Feed">
-    <ion-content overflow-scroll="true" padding="true" class="has-header"></ion-content>
+    <ion-content overflow-scroll="true" padding="true" class="has-header">
+    <ion-item collection-repeat="product in products" item-width="50%" item-height="300">
+<!--     <div class="list card"> -->
+            <a ng-click="openProduct(product.fields)">
+              <div class="item item-image">
+
+                  <img class="product-image" ng-src="{{product.fields.photo_set[0].url_large}}" item-height="280" />
+
+              </div>
+                </a>
+                <div class="item item-icon-left assertive" href="#">
+                    <i class="icon ion-heart"></i>
+                     <p>{{product.fields.brand}}</p>
+                </div>
+  </ion-item>
+    </ion-content>
 </ion-view>

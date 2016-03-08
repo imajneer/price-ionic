@@ -1,27 +1,30 @@
 
     <ion-view title="Product Details">
-         <div class="bar bar-header bar-dark">
-            <button class="button icon ion-arrow-left-c"></button>
-            <h1 class="title">Header</h1>
-        </div>
+           <div class="modal">
+        <header class="bar bar-header bar-positive">
+          <h1 class="title">{{product.title}}</h1>
+          <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
+        </header>
 
         <ion-content overflow-scroll="true" padding="true" class="has-header">
 
         <div class="row responsive-sm">
-            <img src="{product_img_url}">
+            <img ng-src="{{product.photo_set[0].url_medium}}">
         </div>
         
         <hr> 
 
         <div class="prices row">
-            <div class="retail col col-20">Retail: <br>{retail price}</div>
-            <div class="actual col col-60">{actual price}</div>
-            <div class="savings col col-20">Savings: <br>{savings amount}</div>
+            <div class="retail col col-20">Retail: <br>${{product.price + product.amount_saved}}</div>
+            <div class="space col col-20"></div>
+            <div class="actual col col-20">Our Price:<br>{{product.price | currency}}</div>
+            <div class="space col col-20"></div>
+            <div class="savings col col-20">Savings: <br>${{product.amount_saved}}</div>
         </div>
 
         <div class="simulation row">
             <div class="col col-50">Finding the best price.</div>
-            <div class="col col-50">{marketplace}</div>
+            <div class="col col-50">{{product.store_name}}</div>
         </div>
 
         <hr>
@@ -35,8 +38,9 @@
             <i class="icon ion-heart"></i>
         </div>
           <div class="buttons">
-            <button class="button button-calm">Buy</button>
+            <button class="button button-calm" ng-click='buyNow()'>Buy</button>
           </div>
         </ion-footer-bar>
     </ion-content>
+           </div>
 </ion-view>
