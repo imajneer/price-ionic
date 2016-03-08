@@ -1,26 +1,42 @@
-<ion-view title="Product Details">
-    <ion-content overflow-scroll="true" padding="true" class="has-header">
-        <div style="line-height: 250px; border: 1px solid rgb(238, 238, 238); border-radius: 3px; text-align: center; background-color: rgb(255, 255, 255);">
-            <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
+
+    <ion-view title="Product Details">
+         <div class="bar bar-header bar-dark">
+            <button class="button icon ion-arrow-left-c"></button>
+            <h1 class="title">Header</h1>
         </div>
-        <div>
-            <p>Retail</p>
+
+        <ion-content overflow-scroll="true" padding="true" class="has-header">
+
+        <div class="row responsive-sm">
+            <img src="{product_img_url}">
         </div>
-        <div>
-            <p>Price</p>
+        
+        <hr> 
+
+        <div class="prices row">
+            <div class="retail col col-20">Retail: <br>{retail price}</div>
+            <div class="actual col col-60">{actual price}</div>
+            <div class="savings col col-20">Savings: <br>{savings amount}</div>
         </div>
-        <div>
-            <p>Saved</p>
+
+        <div class="simulation row">
+            <div class="col col-50">Finding the best price.</div>
+            <div class="col col-50">{marketplace}</div>
         </div>
-        <div>
-            <p>"Searching for best price"</p>
+
+        <hr>
+
+        <div class="row">
+            <h5>Browse Similar</h5>
         </div>
-        <div>
-            <p>Marketplace</p>
+
+        <ion-footer-bar align-title="left" class="bar-dark">
+        <div class="item-icon-left">
+            <i class="icon ion-heart"></i>
         </div>
-        <ion-list></ion-list>
-        <div style="line-height: 250px; border: 1px solid rgb(238, 238, 238); border-radius: 3px; text-align: center; background-color: rgb(255, 255, 255);">
-            <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
-        </div>
+          <div class="buttons">
+            <button class="button button-calm">Buy</button>
+          </div>
+        </ion-footer-bar>
     </ion-content>
 </ion-view>
