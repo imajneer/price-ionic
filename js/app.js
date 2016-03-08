@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives'])
+angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services', 'app.directives','ngResource','angular-stripe'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -20,3 +20,12 @@ angular.module('app', ['ionic', 'app.controllers', 'app.routes', 'app.services',
     }
   });
 })
+.config(['$resourceProvider', function($resourceProvider,stripeProvider) {
+  // Don't strip trailing slashes from calculated URLs
+  $resourceProvider.defaults.stripTrailingSlashes = false;
+  stripeProvider.setPublishableKey('pk_test_aKantRCo8oXwL3FxinYqdEyn');
+
+}])
+.directive('prUtil',function() {
+    //insert common functions here    
+});

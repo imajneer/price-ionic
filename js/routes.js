@@ -39,12 +39,19 @@ angular.module('app.routes', [])
       }
     }
   })
+  .state('price.item', {
+      url: '/product', 		
+      templateUrl: 'templates/productDetails.html',
+      controller: 'itemViewCtrl'
+    })
 
   .state('price', {
     url: '/',
     templateUrl: 'templates/price.html',
     abstract:true
-  })
+  });
+  
+
 
 $urlRouterProvider.otherwise('//feed')
 
