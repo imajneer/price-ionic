@@ -7,17 +7,15 @@ angular.module('app.services', ['ngResource','LocalStorageModule'])
 .service('BlankService', [function($http){
     
 }])
-.factory('ProductList', function($resource) {
-    var hostUrl = 'http://staging12.getpriceapp.com';
-    
-    return $resource(hostUrl + '/item/list/'); // Note the full endpoint address
+.factory('PriceAPI',function($resource,$rootScope) {
+    var hostUrl = $rootScope.hostUrl;
+    return {
+        item: $resource(hostUrl + '/item-details/:id/'),
+        items: $resource(hostUrl + '/item/list/'),
+        suggestions: $resource(hostUrl + '/item/similar-category/:id/')
+    }
 })
-.factory('Product',function($resource) {
-        var hostUrl = 'http://staging12.getpriceapp.com';
-    
-    return $resource(hostUrl + '/item-details/:id/'); // Note the full endpoint address
 
-})
 .factory('Favorites',function(localStorageService) {
     if(!localStorageService.get('favs'))
         localStorageService.set('favs',[]);

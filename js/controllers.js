@@ -1,22 +1,32 @@
 angular.module('app.controllers', ['app.services','angular-stripe','ngLodash','truncate'])
   
-.controller('feedCtrl', function($scope,ProductList,Product,$rootScope,$stateParams,$location,$state,$ionicModal,$q,$filter,Favorites,lodash) {
+.controller('feedCtrl', function($scope,$rootScope,$stateParams,$location,$state,$ionicModal,$q,$filter,Favorites,lodash,$ionicPlatform,PriceAPI) {
     $rootScope.products = [];
-    var productsQuery = ProductList.query(function(data) {
+    
+    $ionicPlatform.ready(function() {
+        $state.go('price.splash');
+
+    });
+    var productsQuery = PriceAPI.items.query(function(data) {
         $rootScope.products = lodash.map(data[0].products,function(product) {
-            product.isFavorite = Favorites.contains(product);
-            return product;
+            product.fields.isFavorite = Favorites.contains(product.fields);
+            return product.fields;
             });
         
         console.log($rootScope.products);
     });
     $scope.openProduct = function(product) {
-        Product.get({id: product.id},function(data) {
-            console.log('should have gotten data')
-        console.log(data);
-        $scope.product = data;
-        $scope.modal.show();
+        PriceAPI.suggestions.get({id: product.id},function(data) {
+            console.log('suggestions: ' + data);
+            $rootScope.currentSuggestions = data;
         });
+
+        PriceAPI.item.get({id: product.id},function(data) {
+            console.log(data);
+            $rootScope.currentProduct = data;
+            $scope.modal.show();
+        });
+        
         
     };
     
@@ -26,11 +36,11 @@ angular.module('app.controllers', ['app.services','angular-stripe','ngLodash','t
         return Favorites.contains(item) ? "assertive" : "dark";
     };
     $scope.toggleFav = function(product) {
-        if(Favorites.contains(product.fields)) {
-            Favorites.delete(product.fields);
+        if(Favorites.contains(product)) {
+            Favorites.delete(product);
             product.isFavorite = false;
         } else {
-            Favorites.add(product.fields);
+            Favorites.add(product);
             product.isFavorite = true;
         }
         $scope.favs = Favorites.get();

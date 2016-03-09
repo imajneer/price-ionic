@@ -10,7 +10,7 @@ angular.module('app.routes', [])
     
   
 
-      .state('price.feed', {
+  .state('price.feed', {
     url: 'feed',
     views: {
       'tab5': {
@@ -43,6 +43,12 @@ angular.module('app.routes', [])
       url: 'product',
       templateUrl: 'templates/productDetails.html',
       controller: 'itemViewCtrl'
+    })
+    
+    .state('price.splash', {
+      url: 'splash',
+      templateUrl: 'templates/welcome.html',
+      controller: 'WelcomeCtrl'
     })
 
   .state('price', {
