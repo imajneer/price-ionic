@@ -8,9 +8,11 @@
 
         <ion-content overflow-scroll="true" padding="true" class="has-header">
 
-        <div class="row responsive-sm">
-            <img ng-src="{{product.photo_set[0].url_medium}}">
-        </div>
+            <ion-slide-box>
+            <ion-slide ng-repeat="photo in product.photo_set">
+                        <img class="product" ng-src="{{photo.url_medium}}">
+            </ion-slide>
+            </ion-slide-box>
         
         <hr> 
 

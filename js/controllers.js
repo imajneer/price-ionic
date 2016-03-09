@@ -16,7 +16,7 @@ angular.module('app.controllers', ['app.services','angular-stripe'])
         });
         
     }
-    
+
     $ionicModal.fromTemplateUrl('templates/productDetails.html', function($ionicModal) {
         $scope.modal = $ionicModal;
     }, {

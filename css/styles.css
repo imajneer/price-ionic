@@ -9,3 +9,7 @@
 .modal-backdrop-bg {
     background-color: transparent !important;
 }
+
+img.product {
+    margin: 0 auto;
+}
