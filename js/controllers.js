@@ -1,9 +1,13 @@
-angular.module('app.controllers', ['app.services','angular-stripe'])
+angular.module('app.controllers', ['app.services','angular-stripe','ngLodash'])
   
-.controller('feedCtrl', function($scope,ProductList,Product,$rootScope,$stateParams,$location,$state,$ionicModal,$q,$filter) {
+.controller('feedCtrl', function($scope,ProductList,Product,$rootScope,$stateParams,$location,$state,$ionicModal,$q,$filter,Favorites,lodash) {
     $rootScope.products = [];
     var productsQuery = ProductList.query(function(data) {
-        $rootScope.products = data[0].products;
+        $rootScope.products = lodash.map(data[0].products,function(product) {
+            product.isFavorite = Favorites.contains(product);
+            return product;
+            });
+        
         console.log($rootScope.products);
     });
     $scope.openProduct = function(product) {
@@ -12,10 +16,25 @@ angular.module('app.controllers', ['app.services','angular-stripe'])
         console.log(data);
         $scope.product = data;
         $scope.modal.show();
-
         });
         
-    }
+    };
+    
+    $scope.favs = Favorites.get();
+    
+    $scope.favoriteStyle = function(item) {
+        return Favorites.contains(item) ? "assertive" : "dark";
+    };
+    $scope.toggleFav = function(product) {
+        if(Favorites.contains(product.fields)) {
+            Favorites.delete(product.fields);
+            product.isFavorite = false;
+        } else {
+            Favorites.add(product.fields);
+            product.isFavorite = true;
+        }
+        $scope.favs = Favorites.get();
+    };
 
     $ionicModal.fromTemplateUrl('templates/productDetails.html', function($ionicModal) {
         $scope.modal = $ionicModal;
@@ -25,10 +44,14 @@ angular.module('app.controllers', ['app.services','angular-stripe'])
         // The animation we want to use for the modal entrance
         animation: 'slide-in-up'
     }); 
+
 })
    
-.controller('favoritesCtrl', function($scope) {
-    
+.controller('favoritesCtrl', function($scope,Favorites) {
+    console.log('loaded favs!');
+    $scope.products = [];
+    $scope.products = Favorites.get();
+    console.log($scope.products);
 })
    
 .controller('accountCtrl', function($scope) {
