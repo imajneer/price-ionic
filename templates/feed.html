@@ -1,5 +1,15 @@
 <ion-view title="Feed">
+    <ion-nav-buttons side="primary">
+     <button class="ion-navicon-round" ng-click="openCategories()">
+     
+      </button>
+     <button class="ion-arrow-down-b filter-btn" ng-click="openFilters()">
+     
+      </button>
+    </ion-nav-buttons>
     <ion-content overflow-scroll="true" padding="true" class="has-header">
+    <ion-refresher pulling-text="Pull to refresh" on-refresh="refresh()">
+    </ion-refresher>
     <ion-item collection-repeat="product in products" item-width="50%" item-height="250">
 <!--     <div class="list card"> -->
             <a ng-click="openProduct(product)">

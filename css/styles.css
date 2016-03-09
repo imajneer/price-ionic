@@ -56,3 +56,6 @@ img.product {
 h1.title {
     text-overflow: ellipsis;
 }
+.filter-btn {
+    margin-right: 5px;
+}

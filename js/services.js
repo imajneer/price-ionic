@@ -7,12 +7,26 @@ angular.module('app.services', ['ngResource','LocalStorageModule'])
 .service('BlankService', [function($http){
     
 }])
-.factory('PriceAPI',function($resource,$rootScope) {
+.factory('PriceAPI',function($resource,$rootScope,$http) {
     var hostUrl = $rootScope.hostUrl;
     return {
         item: $resource(hostUrl + '/item-details/:id/'),
         items: $resource(hostUrl + '/item/list/'),
-        suggestions: $resource(hostUrl + '/item/similar-category/:id/')
+        suggestions: $resource(hostUrl + '/item/similar-category/:id/'),
+        itemList: function() { $http( {
+            method: 'get',
+            url: hostUrl + '/item/list/',
+            params: {
+                'min_price' : $rootScope.min_price,
+                'max_price' : $rootScope.max_price
+            },
+            data: {
+                'category' : 'jewelry', //$rootScope.category
+                'page':$rootScope.page_no,
+                'show_by': 10,
+                'type' : 'female' //$rootScope.gender
+            }
+        })}
     }
 })
 

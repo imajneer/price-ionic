@@ -1,24 +1,39 @@
 angular.module('app.controllers', ['app.services','angular-stripe','ngLodash','truncate'])
   
-.controller('feedCtrl', function($scope,$rootScope,$stateParams,$location,$state,$ionicModal,$q,$filter,Favorites,lodash,$ionicPlatform,PriceAPI) {
+.controller('feedCtrl', function($scope,$rootScope,$stateParams,$location,$state,$ionicModal,$q,$filter,Favorites,lodash,$ionicPlatform,PriceAPI,$ionicActionSheet) {
     $rootScope.products = [];
     
     $ionicPlatform.ready(function() {
         $state.go('price.splash');
 
     });
-    var productsQuery = PriceAPI.items.query(function(data) {
-        $rootScope.products = lodash.map(data[0].products,function(product) {
+
+    $scope.refresh = function() {
+        console.log('refresh products');
+        PriceAPI.items.query({ //url params
+            'price_min': $rootScope.price_min,
+            'price_max': $rootScope.price_max
+        },
+        function(data) {
+         $rootScope.products = lodash.map(data[0].products,function(product) {
             product.fields.isFavorite = Favorites.contains(product.fields);
             return product.fields;
             });
         
+        $rootScope.currentSuggestions = $rootScope.products;
+
         console.log($rootScope.products);
+         $scope.$broadcast('scroll.refreshComplete');
+//          $scope.$apply()
     });
+    }
+
     $scope.openProduct = function(product) {
-        PriceAPI.suggestions.get({id: product.id},function(data) {
+        PriceAPI.suggestions.query({id: product.id}, function(data) {
             console.log('suggestions: ' + data);
-            $rootScope.currentSuggestions = data;
+            
+            
+//             $rootScope.currentSuggestions = $rootScope.products;
         });
 
         PriceAPI.item.get({id: product.id},function(data) {
@@ -26,9 +41,46 @@ angular.module('app.controllers', ['app.services','angular-stripe','ngLodash','t
             $rootScope.currentProduct = data;
             $scope.modal.show();
         });
-        
+
         
     };
+    
+    $scope.refresh();
+
+    $scope.openCategories = function() {
+        
+    };
+    
+    $scope.openFilters = function() {
+        $ionicActionSheet.show({
+        buttons: [
+            {text: 'Above $300'},
+            {text: '$100 - 300'},
+            {text: 'Below $100'}
+        ],
+        buttonClicked: function(index) {
+            console.log('clicked button');
+            switch(index) {
+                case 0: //above 300
+                    console.log('should set max price');
+                    $rootScope.min_price = '300';
+                    $rootScope.max_price = '';
+                    $scope.refresh();
+                    return true;
+                case 1 : // between 100-300
+                    $rootScope.min_price = '100';
+                    $rootScope.max_price = '300';
+                    $scope.refresh();
+                    return true;
+                case 2 : // below 100
+                    $rootScope.min_price = '';
+                    $rootScope.max_price = '100';
+                    $scope.refresh();
+                    return true;
+            }
+        }
+
+    })};
     
     $scope.favs = Favorites.get();
     
