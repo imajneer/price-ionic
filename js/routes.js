@@ -11,7 +11,7 @@ angular.module('app.routes', [])
   
 
       .state('price.feed', {
-    url: '/feed',
+    url: 'feed',
     views: {
       'tab5': {
         templateUrl: 'templates/feed.html',
@@ -21,7 +21,7 @@ angular.module('app.routes', [])
   })
 
   .state('price.favorites', {
-    url: '/favorites',
+    url: 'favorites',
     views: {
       'tab2': {
         templateUrl: 'templates/favorites.html',
@@ -31,7 +31,7 @@ angular.module('app.routes', [])
   })
 
   .state('price.account', {
-    url: '/account',
+    url: 'account',
     views: {
       'tab3': {
         templateUrl: 'templates/account.html',
@@ -40,7 +40,7 @@ angular.module('app.routes', [])
     }
   })
   .state('price.item', {
-      url: '/product', 		
+      url: 'product',
       templateUrl: 'templates/productDetails.html',
       controller: 'itemViewCtrl'
     })
@@ -53,7 +53,7 @@ angular.module('app.routes', [])
   
 
 
-$urlRouterProvider.otherwise('//feed')
+$urlRouterProvider.otherwise('feed')
 
   
 
