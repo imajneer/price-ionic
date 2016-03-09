@@ -1,6 +1,6 @@
 <ion-view title="Feed">
     <ion-content overflow-scroll="true" padding="true" class="has-header">
-    <ion-item collection-repeat="product in products" item-width="50%" item-height="300">
+    <ion-item collection-repeat="product in products" item-width="50%" item-height="250">
 <!--     <div class="list card"> -->
             <a ng-click="openProduct(product)">
               <div class="item item-image">
@@ -9,8 +9,9 @@
 
               </div>
                 </a>
+<<<<<<< HEAD
                 <div class="item item-icon-left assertive" href="#" ng-click="toggleFav(product.fields)">
-                    <i class="icon ion-heart" ng-class="{dark:product.isFavorite, assertive:!product.isFavorite}" ></i>
+                    <i class="icon ion-heart" ng-class="{dark:product.fields.isFavorite, assertive:!product.fields.isFavorite}" ></i>
                      <p>{{product.fields.brand}}</p>
                 </div>
   </ion-item>
