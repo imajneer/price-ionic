@@ -1,4 +1,4 @@
-angular.module('app.controllers', ['app.services','angular-stripe','ngLodash'])
+angular.module('app.controllers', ['app.services','angular-stripe','ngLodash','truncate'])
   
 .controller('feedCtrl', function($scope,ProductList,Product,$rootScope,$stateParams,$location,$state,$ionicModal,$q,$filter,Favorites,lodash) {
     $rootScope.products = [];

@@ -2,7 +2,7 @@
     <ion-view title="Product Details">
            <div class="modal">
         <header class="bar bar-header bar-positive">
-          <h1 class="title">{{product.title}}</h1>
+          <h1 class="title">{{product.title | characters:45}}</h1>
           <div class="button button-clear" ng-click="modal.hide()"><span class="icon ion-close"></span></div>
         </header>
 
